@@ -8,6 +8,7 @@ import com.sparta.currency_user.entity.UserCurrency;
 import com.sparta.currency_user.service.CurrencyService;
 import com.sparta.currency_user.service.ExchangeService;
 import com.sparta.currency_user.service.UserService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class ExchangeController {
     private final UserService userService;
     private final CurrencyService currencyService;
 
+    //환전 요청 수행
     @PostMapping()
     public ResponseEntity<ExchangeResponseDto> exchangeCurrency (@Valid @RequestBody ExchangeRequestDto requestDto){
 
@@ -39,13 +41,18 @@ public class ExchangeController {
         return ResponseEntity.ok().body(exchangeService.save(exchangeRequest));
     }
 
+    //환전 요청 조회
     @GetMapping("/{userId}")
     public ResponseEntity<List<ExchangeResponseDto>> findExchangeRequest (@PathVariable("userId") Long userId) {
 
         return ResponseEntity.ok().body(exchangeService.findExchangeRequest(userId));
     }
 
-
-
+    //환전 요청 상태 취소
+    @Transactional
+    @PatchMapping("/{exchangeId}")
+    public ResponseEntity<ExchangeResponseDto> cancelExchange (@PathVariable("exchangeId") Long exchangeId) {
+        return ResponseEntity.ok().body(exchangeService.cancelExchange(exchangeId));
+    }
 
 }

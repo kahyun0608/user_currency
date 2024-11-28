@@ -4,6 +4,7 @@ import com.sparta.currency_user.dto.ExchangeResponseDto;
 import com.sparta.currency_user.entity.User;
 import com.sparta.currency_user.entity.UserCurrency;
 import com.sparta.currency_user.repository.ExchangeRepository;
+import com.sparta.currency_user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class ExchangeService {
 
     private final ExchangeRepository exchangeRepository;
+    private final UserRepository userRepository;
 
     public ExchangeResponseDto save (UserCurrency userCurrency) {
         UserCurrency savedUserCurrency= exchangeRepository.save(userCurrency);
@@ -26,13 +28,14 @@ public class ExchangeService {
     }
 
     public List<ExchangeResponseDto> findExchangeRequest (Long userId) {
+        userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
         List<UserCurrency> exchangeRequest = exchangeRepository.findExchangeRequest(userId);
         return exchangeRequest.stream()
                 .map(ExchangeResponseDto::toDto).collect(Collectors.toList());
     }
 
     public ExchangeResponseDto cancelExchange (Long exchangeId) {
-        UserCurrency exchangeFoundById = exchangeRepository.findById(exchangeId).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        UserCurrency exchangeFoundById = exchangeRepository.findById(exchangeId).orElseThrow(()-> new IllegalArgumentException("해당하는 환전 요청을 찾을 수 없습니다."));
         exchangeFoundById.setStatus("cancelled");
         return ExchangeResponseDto.toDto(exchangeFoundById);
     }

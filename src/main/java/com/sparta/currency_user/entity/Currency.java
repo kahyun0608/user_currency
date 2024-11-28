@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,4 +30,13 @@ public class Currency extends BasicEntity{
     }
 
     public Currency() {}
+
+    public static BigDecimal modifyExchangeRate (String currencyName, BigDecimal exchangeRate) {
+        return switch (currencyName) {
+            case "JPY" -> exchangeRate.divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_EVEN);
+            case "SEK", "CNY", "HKD" -> exchangeRate.divide(BigDecimal.valueOf(10), 2, RoundingMode.HALF_EVEN);
+            default -> exchangeRate;
+        };
+    }
+
 }

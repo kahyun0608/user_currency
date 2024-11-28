@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.List;
 
 @RestController
 @RequestMapping("/exchanges")
@@ -36,6 +37,12 @@ public class ExchangeController {
         UserCurrency exchangeRequest = new UserCurrency(user, currency, amountInKrw, amountAfterExchange, "normal");
 
         return ResponseEntity.ok().body(exchangeService.save(exchangeRequest));
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<ExchangeResponseDto>> findExchangeRequest (@PathVariable("userId") Long userId) {
+
+        return ResponseEntity.ok().body(exchangeService.findExchangeRequest(userId));
     }
 
 

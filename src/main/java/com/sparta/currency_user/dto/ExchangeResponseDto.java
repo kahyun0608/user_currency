@@ -26,7 +26,7 @@ public class ExchangeResponseDto {
         this.amountAfterExchange = amountAfterExchange;
         this.status = status;
     }
-
+    
     public static ExchangeResponseDto toDto (UserCurrency userCurrency) {
 
         return new ExchangeResponseDto(

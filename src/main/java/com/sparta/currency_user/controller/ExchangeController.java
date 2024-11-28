@@ -1,5 +1,6 @@
 package com.sparta.currency_user.controller;
 
+import com.sparta.currency_user.dto.EveryExchangeResponseDto;
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
 import com.sparta.currency_user.entity.Currency;
@@ -46,6 +47,13 @@ public class ExchangeController {
     public ResponseEntity<List<ExchangeResponseDto>> findExchangeRequest (@PathVariable("userId") Long userId) {
 
         return ResponseEntity.ok().body(exchangeService.findExchangeRequest(userId));
+    }
+
+    //고객의 모든 환전 요청 조회
+    @GetMapping()
+    public ResponseEntity<List<EveryExchangeResponseDto>> findEveryExchangeRequest (){
+
+        return ResponseEntity.ok().body(exchangeService.findEveryExchangeRequest());
     }
 
     //환전 요청 상태 취소

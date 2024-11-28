@@ -1,5 +1,6 @@
 package com.sparta.currency_user.service;
 
+import com.sparta.currency_user.dto.EveryExchangeResponseDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
 import com.sparta.currency_user.entity.User;
 import com.sparta.currency_user.entity.UserCurrency;
@@ -34,9 +35,15 @@ public class ExchangeService {
                 .map(ExchangeResponseDto::toDto).collect(Collectors.toList());
     }
 
+    public List<EveryExchangeResponseDto> findEveryExchangeRequest () {
+        return exchangeRepository.findEveryExchangeRequest();
+    }
+
     public ExchangeResponseDto cancelExchange (Long exchangeId) {
         UserCurrency exchangeFoundById = exchangeRepository.findById(exchangeId).orElseThrow(()-> new IllegalArgumentException("해당하는 환전 요청을 찾을 수 없습니다."));
         exchangeFoundById.setStatus("cancelled");
         return ExchangeResponseDto.toDto(exchangeFoundById);
     }
+
+
 }

@@ -15,11 +15,4 @@ https://gossamer-giraffe-f6d.notion.site/14c3bd8753e48065adc8dcb5a97a3521?v=4ac0
 ## 3. ERD
 <img width="563" alt="스크린샷 2024-11-14 오후 4 31 50" src="https://github.com/user-attachments/assets/ba6ba928-ffa7-4982-a1dc-f56184cf1e43">
 
-## 4. 어려웠던 문제
-
-
-## 5. 개선사항
-
-## 6. 소감
-
 

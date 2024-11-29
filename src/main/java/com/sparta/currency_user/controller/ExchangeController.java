@@ -36,8 +36,7 @@ public class ExchangeController {
         Currency currency = currencyService.findCurrencyById(requestDto.getCurrencyId());
         BigDecimal amountInKrw = requestDto.getAmountInKrw();
         BigDecimal exchangeRate = Currency.modifyExchangeRate(currency.getCurrencyName(),currency.getExchangeRate());
-        BigDecimal amountAfterExchange = new BigDecimal(String.valueOf(
-                amountInKrw.divide(exchangeRate,2, RoundingMode.HALF_EVEN)));
+        BigDecimal amountAfterExchange = amountInKrw.divide(exchangeRate,2, RoundingMode.HALF_EVEN);
 
         UserCurrency exchangeRequest = new UserCurrency(user, currency, amountInKrw, amountAfterExchange, "normal");
 
